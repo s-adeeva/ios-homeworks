@@ -42,6 +42,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         tabBarController.selectedIndex = 0 // профиль при открытии будет первым
         
+        window.rootViewController = tabBarController
+        window.makeKeyAndVisible()
+        
         self.window = window
     }
 
