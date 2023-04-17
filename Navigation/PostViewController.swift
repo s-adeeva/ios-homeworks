@@ -16,6 +16,14 @@ class PostViewController: UIViewController {
         view.backgroundColor = .systemCyan
         title = post.title
         
+        
+        // добавляем кнопку на навигейшн бар чтобы открылся infoVC (модально)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Info", style: .plain, target: self, action: #selector(infoTapped))
+    }
+    
+    @objc func infoTapped() {
+        let infoVC = InfoViewController()
+        present(infoVC,animated: true)
     }
     
 // скрываю таб бар на экране поста
