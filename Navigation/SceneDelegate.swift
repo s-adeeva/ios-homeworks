@@ -19,11 +19,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: scene)
         
         // создаем вкладки для tabbar, один для профиля, другой для ленты
-        let profileViewController = ViewController()
+        let profileViewController = ProfileViewController()
         profileViewController.title = "Profile"
         profileViewController.view.backgroundColor = .yellow
         
-        let feedViewController = ViewController()
+        let feedViewController = FeedViewController()
         feedViewController.title = "Feed"
         feedViewController.view.backgroundColor = .orange
         
