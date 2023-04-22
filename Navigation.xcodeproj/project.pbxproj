@@ -17,6 +17,7 @@
 		930F511529ED90C4004B871D /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930F511429ED90C4004B871D /* PostViewController.swift */; };
 		930F511729ED92CF004B871D /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930F511629ED92CF004B871D /* Post.swift */; };
 		930F511929ED94C9004B871D /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930F511829ED94C9004B871D /* InfoViewController.swift */; };
+		930F511C29F1A702004B871D /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930F511B29F1A701004B871D /* ProfileHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		930F511429ED90C4004B871D /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		930F511629ED92CF004B871D /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		930F511829ED94C9004B871D /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		930F511B29F1A701004B871D /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +50,7 @@
 		930F50F029ED870F004B871D = {
 			isa = PBXGroup;
 			children = (
+				930F511A29F1A643004B871D /* ЗProfile */,
 				930F511629ED92CF004B871D /* Post.swift */,
 				930F50FB29ED870F004B871D /* Navigation */,
 				930F50FA29ED870F004B871D /* Products */,
@@ -77,6 +80,14 @@
 				930F510A29ED8711004B871D /* Info.plist */,
 			);
 			path = Navigation;
+			sourceTree = "<group>";
+		};
+		930F511A29F1A643004B871D /* ЗProfile */ = {
+			isa = PBXGroup;
+			children = (
+				930F511B29F1A701004B871D /* ProfileHeaderView.swift */,
+			);
+			path = "ЗProfile";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -153,6 +164,7 @@
 				930F510129ED870F004B871D /* ViewController.swift in Sources */,
 				930F50FD29ED870F004B871D /* AppDelegate.swift in Sources */,
 				930F511329ED8F25004B871D /* FeedViewController.swift in Sources */,
+				930F511C29F1A702004B871D /* ProfileHeaderView.swift in Sources */,
 				930F511129ED8F17004B871D /* ProfileViewController.swift in Sources */,
 				930F511729ED92CF004B871D /* Post.swift in Sources */,
 				930F511929ED94C9004B871D /* InfoViewController.swift in Sources */,
