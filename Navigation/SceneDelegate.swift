@@ -10,7 +10,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    static var tabBarHeight: CGFloat = 0 // статическое свойство для хранения высоты таб-бара
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
@@ -29,6 +29,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         //создаем tabbar контроллер
         let tabBarController = UITabBarController()
+        
+        SceneDelegate.tabBarHeight = tabBarController.tabBar.frame.height
         
         //настраиваем иконки контроллера
         profileViewController.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.crop.circle"), tag: 0)
