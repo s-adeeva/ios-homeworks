@@ -10,8 +10,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    static var tabBarHeight: CGFloat = 0 // статическое свойство для хранения высоты таб-бара
-
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let scene = (scene as? UIWindowScene) else { return }
@@ -21,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // создаем вкладки для tabbar, один для профиля, другой для ленты
         let profileViewController = ProfileViewController()
         profileViewController.title = "Profile"
-        profileViewController.view.backgroundColor = .yellow
+        profileViewController.view.backgroundColor = .lightGray
         
         let feedViewController = FeedViewController()
         feedViewController.title = "Feed"
@@ -29,8 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         //создаем tabbar контроллер
         let tabBarController = UITabBarController()
-        
-        SceneDelegate.tabBarHeight = tabBarController.tabBar.frame.height
+        tabBarController.tabBar.backgroundColor = .white
         
         //настраиваем иконки контроллера
         profileViewController.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.crop.circle"), tag: 0)
