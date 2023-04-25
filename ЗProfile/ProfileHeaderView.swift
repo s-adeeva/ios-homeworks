@@ -10,94 +10,131 @@ import UIKit
 
 class ProfileHeaderView: UIView {
     
-    // добавляем картинку
-     var imageView: UIImageView = {
-        var imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.image = UIImage(named: "Boba")
-        imageView.layer.borderColor = UIColor.white.cgColor
-        imageView.layer.borderWidth = 3
-        return imageView
+    var avatarImageView: UIImageView = {
+        var avatarImageView = UIImageView()
+        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
+        avatarImageView.contentMode = .scaleAspectFill
+        avatarImageView.clipsToBounds = true
+        avatarImageView.image = UIImage(named: "Boba")
+        avatarImageView.layer.borderColor = UIColor.white.cgColor
+        avatarImageView.layer.borderWidth = 3
+        return avatarImageView
     }()
     
-    // добавляем лейбл Boba cat
-    private var labelName: UILabel = {
-        var labelName = UILabel()
-        let labelWidth: CGFloat = 100 // задаем ширину лейбла для имени
-        let screenWidth = UIScreen.main.bounds.width // получаем ширину экрана
-        let centerX = (screenWidth - labelWidth) / 2 // вычисляем координату x
-        labelName.textColor = .black
-        labelName.textAlignment = .center
-        labelName.text = "Boba cat"
-        labelName.font = UIFont.boldSystemFont(ofSize: 18)
-        return labelName
+    private var fullNameLabel: UILabel = {
+        var fullNameLabel = UILabel()
+        fullNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        fullNameLabel.textColor = .black
+        fullNameLabel.textAlignment = .center
+        fullNameLabel.text = "Boba cat"
+        fullNameLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        return fullNameLabel
     }()
     
-    // Создаем переменную, которая будет хранить ссылку на экземпляр класса ProfileHeaderView, чтобы при обработке таргета кнопки не возникало ошибки
-        var target: ProfileHeaderView?
-    
-    // добавляем кнопку show status
-    private var button: UIButton = {
-        var button = UIButton()
-        button.setTitle("Show status", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 4
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowRadius = 4.0
-        button.layer.shadowOpacity = 0.7
-        button.layer.shadowOffset = CGSize(width: 4.0, height: 4.0)
-        button.addTarget(target, action: #selector(buttonTapped), for: .touchUpInside) //обрабатываем нажатие кнопки
-        return button
+    var target: ProfileHeaderView?
+  
+    var setStatusButton: UIButton = {
+        var setStatusButton = UIButton()
+        setStatusButton.translatesAutoresizingMaskIntoConstraints = false
+        setStatusButton.setTitle("Show status", for: .normal)
+        setStatusButton.setTitleColor(.white, for: .normal)
+        setStatusButton.backgroundColor = .systemBlue
+        setStatusButton.layer.cornerRadius = 4
+        setStatusButton.layer.shadowColor = UIColor.black.cgColor
+        setStatusButton.layer.shadowRadius = 4.0
+        setStatusButton.layer.shadowOpacity = 0.7
+        setStatusButton.layer.shadowOffset = CGSize(width: 4.0, height: 4.0)
+        setStatusButton.addTarget(target, action: #selector(buttonTapped), for: .touchUpInside) //обрабатываем нажатие кнопки
+        return setStatusButton
     }()
     
-    // добавляем лейбл для статуса
-    private var labelStatus: UILabel = {
-        let labelStatus = UILabel()
-        labelStatus.textColor = .gray
-        labelStatus.textAlignment = .center
-        labelStatus.font = UIFont.systemFont(ofSize: 14)
-        labelStatus.text = "Waiting for something..."
-        return labelStatus
+    private var statusLabel: UILabel = {
+        let statusLabel = UILabel()
+        statusLabel.translatesAutoresizingMaskIntoConstraints = false
+        statusLabel.textColor = .gray
+        statusLabel.textAlignment = .center
+        statusLabel.font = UIFont.systemFont(ofSize: 14)
+        statusLabel.text = "Waiting for something..."
+        return statusLabel
     }()
     
-    // настраиваем элементы на экране
+    private var statusText: String = ""
+    private var statusTextField: UITextField = {
+        let statusTextField = UITextField()
+        statusTextField.translatesAutoresizingMaskIntoConstraints = false
+        statusTextField.placeholder = "Your status..."
+        statusTextField.layer.cornerRadius = 12
+        statusTextField.layer.borderColor = UIColor.black.cgColor
+        statusTextField.layer.borderWidth = 1
+        statusTextField.backgroundColor = .white
+        statusTextField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        statusTextField.textColor = .black
+        statusTextField.addTarget(target, action: #selector(statusTextChanged(_:)), for: .editingDidEnd)
+        return statusTextField
+    }()
+    
+    @objc func statusTextChanged(_ textField: UITextField) {
+        statusText = textField.text ?? ""
+        statusLabel.text = statusText
+    }
+    
+    // обрабатываем нажатие на кнопку
+    @objc func buttonTapped() {
+        statusLabel.text = statusTextField.text
+        print(statusLabel.text ?? "")
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
-        let labelWidth: CGFloat = 100 // задаем ширину лейбла для имени
-        let screenWidth = UIScreen.main.bounds.width // получаем ширину экрана
-        let centerX = (screenWidth - labelWidth) / 2 // размещаем посередине
-        //картинка
-        imageView.frame = CGRect(x: 16, y: 112, width: 130, height: 130)
-        imageView.layer.cornerRadius = imageView.frame.width/2
-        //имя
-        labelName.frame = CGRect(x: centerX, y: 110, width: labelWidth, height: 50)
-        //кнопка
-        button.frame = CGRect(x: 16, y: imageView.frame.maxY + 16 , width: screenWidth - 32, height: 50)
-        //статус
-        labelStatus.frame = CGRect(x: centerX, y: button.frame.minY - 84, width: 182, height: 50)
+        avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.target = self // у переменной target теперь есть ссылка на экземпляр класса ProfileHeaderView
+        self.target = self
+        self.backgroundColor = .lightGray
         configureSubviews()
+        setupConstraints()
     }
     
     // добавляем вьюхи на экран
     private func configureSubviews() {
-           addSubview(imageView)
-           addSubview(labelName)
-           addSubview(button)
-           addSubview(labelStatus)
-       }
-    
-    // обрабатываем нажатие на кнопку
-    @objc func buttonTapped() {
-        print(labelStatus.text ?? "")
+        addSubview(avatarImageView)
+        addSubview(fullNameLabel)
+        addSubview(setStatusButton)
+        addSubview(statusLabel)
+        addSubview(statusTextField)
     }
     
+    private func setupConstraints() {
+        
+        NSLayoutConstraint.activate([
+            avatarImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
+            avatarImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            avatarImageView.heightAnchor.constraint(equalToConstant: 130),
+            avatarImageView.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -32),
+            avatarImageView.trailingAnchor.constraint(equalTo: fullNameLabel.leadingAnchor, constant: -16),
+            
+            fullNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
+            fullNameLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 27),
+            fullNameLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            
+            
+            setStatusButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 32),
+            setStatusButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            setStatusButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            setStatusButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            statusLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
+            statusLabel.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -60),
+            
+            statusTextField.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 10),
+            statusTextField.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -10),
+            statusTextField.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
+            statusTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            statusTextField.heightAnchor.constraint(equalToConstant: 40)
+        ])
+    }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
