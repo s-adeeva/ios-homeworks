@@ -38,15 +38,11 @@ class ProfileViewController: UIViewController {
             profileHeaderV.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             profileHeaderV.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             profileHeaderV.heightAnchor.constraint(equalToConstant: 220),
-            //profileHeaderV.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        navigationController?.setNavigationBarHidden(false, animated: false)
-        
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
-    
 }

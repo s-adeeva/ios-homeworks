@@ -32,7 +32,7 @@ class ProfileHeaderView: UIView {
     }()
     
     var target: ProfileHeaderView?
-  
+    
     var setStatusButton: UIButton = {
         var setStatusButton = UIButton()
         setStatusButton.translatesAutoresizingMaskIntoConstraints = false
@@ -59,9 +59,10 @@ class ProfileHeaderView: UIView {
     }()
     
     private var statusText: String = ""
-    private var statusTextField: UITextField = {
+    private lazy var statusTextField: UITextField = {
         let statusTextField = UITextField()
         statusTextField.translatesAutoresizingMaskIntoConstraints = false
+        statusTextField.delegate = self
         statusTextField.placeholder = "Your status..."
         statusTextField.indent(size: 5)
         statusTextField.layer.cornerRadius = 12
@@ -136,3 +137,12 @@ class ProfileHeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+// скрываем клавиатуру
+extension ProfileHeaderView: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        endEditing(true)
+        return true
+    }
+}
+
