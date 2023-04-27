@@ -63,6 +63,7 @@ class ProfileHeaderView: UIView {
         let statusTextField = UITextField()
         statusTextField.translatesAutoresizingMaskIntoConstraints = false
         statusTextField.placeholder = "Your status..."
+        statusTextField.indent(size: 5)
         statusTextField.layer.cornerRadius = 12
         statusTextField.layer.borderColor = UIColor.black.cgColor
         statusTextField.layer.borderWidth = 1
@@ -112,27 +113,23 @@ class ProfileHeaderView: UIView {
             avatarImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
             avatarImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             avatarImageView.heightAnchor.constraint(equalToConstant: 130),
-            avatarImageView.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -32),
-            avatarImageView.trailingAnchor.constraint(equalTo: fullNameLabel.leadingAnchor, constant: -16),
             
             fullNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
             fullNameLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 27),
             fullNameLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             
-            
-            setStatusButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 32),
-            setStatusButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            setStatusButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            setStatusButton.heightAnchor.constraint(equalToConstant: 50),
-            
             statusLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
-            statusLabel.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -60),
+            statusLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -8),
             
-            statusTextField.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 10),
-            statusTextField.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -10),
+            statusTextField.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -8),
             statusTextField.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
             statusTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            statusTextField.heightAnchor.constraint(equalToConstant: 40)
+            statusTextField.heightAnchor.constraint(equalToConstant: 40),
+            
+            setStatusButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 28),
+            setStatusButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            setStatusButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            setStatusButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     required init?(coder: NSCoder) {

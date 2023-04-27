@@ -18,13 +18,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: scene)
         
         // создаем вкладки для tabbar, один для профиля, другой для ленты
-        let profileViewController = ProfileViewController()
-        profileViewController.title = "Profile"
-        profileViewController.view.backgroundColor = .lightGray
+        
+        //profileViewController.view.backgroundColor = .white
         
         let feedViewController = FeedViewController()
         feedViewController.title = "Feed"
-        feedViewController.view.backgroundColor = .orange
+        feedViewController.view.backgroundColor = .systemBlue
+        
+        let profileViewController = LogInViewController()
+        profileViewController.title = "Profile"
         
         //создаем tabbar контроллер
         let tabBarController = UITabBarController()
@@ -34,7 +36,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         profileViewController.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.crop.circle"), tag: 0)
         feedViewController.tabBarItem = UITabBarItem(title: "Feed", image: UIImage(systemName: "newspaper"), tag: 1)
         
-        let controllers = [profileViewController, feedViewController]
+        let controllers = [feedViewController, profileViewController]
         
         tabBarController.viewControllers = controllers.map {
             UINavigationController(rootViewController: $0)

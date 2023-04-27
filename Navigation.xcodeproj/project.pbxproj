@@ -18,6 +18,8 @@
 		930F511729ED92CF004B871D /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930F511629ED92CF004B871D /* Post.swift */; };
 		930F511929ED94C9004B871D /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930F511829ED94C9004B871D /* InfoViewController.swift */; };
 		930F511C29F1A702004B871D /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930F511B29F1A701004B871D /* ProfileHeaderView.swift */; };
+		930F512029F84A7B004B871D /* UIColor + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930F511F29F84A7B004B871D /* UIColor + extension.swift */; };
+		930F512229F90C24004B871D /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930F512129F90C24004B871D /* LogInViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		930F511629ED92CF004B871D /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		930F511829ED94C9004B871D /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		930F511B29F1A701004B871D /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		930F511F29F84A7B004B871D /* UIColor + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + extension.swift"; sourceTree = "<group>"; };
+		930F512129F90C24004B871D /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +78,7 @@
 				930F50FE29ED870F004B871D /* SceneDelegate.swift */,
 				930F511029ED8F17004B871D /* ProfileViewController.swift */,
 				930F511229ED8F25004B871D /* FeedViewController.swift */,
+				930F511F29F84A7B004B871D /* UIColor + extension.swift */,
 				930F510029ED870F004B871D /* ViewController.swift */,
 				930F510529ED8711004B871D /* Assets.xcassets */,
 				930F510729ED8711004B871D /* LaunchScreen.storyboard */,
@@ -86,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				930F511B29F1A701004B871D /* ProfileHeaderView.swift */,
+				930F512129F90C24004B871D /* LogInViewController.swift */,
 			);
 			path = "ЗProfile";
 			sourceTree = "<group>";
@@ -161,6 +167,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				930F511529ED90C4004B871D /* PostViewController.swift in Sources */,
+				930F512029F84A7B004B871D /* UIColor + extension.swift in Sources */,
+				930F512229F90C24004B871D /* LogInViewController.swift in Sources */,
 				930F510129ED870F004B871D /* ViewController.swift in Sources */,
 				930F50FD29ED870F004B871D /* AppDelegate.swift in Sources */,
 				930F511329ED8F25004B871D /* FeedViewController.swift in Sources */,
