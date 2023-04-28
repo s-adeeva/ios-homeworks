@@ -51,6 +51,16 @@ class FeedViewController: UIViewController {
         view.addSubview(stackView)
         setUpConstraints()
         setupTargets()
+        
+        // делаем нав бар белым
+        if #available(iOS 15.0, *) {
+            let navigationBarAppearance = UINavigationBarAppearance()
+            navigationBarAppearance.configureWithDefaultBackground()
+            UINavigationBar.appearance().standardAppearance = navigationBarAppearance
+            UINavigationBar.appearance().compactAppearance = navigationBarAppearance
+            UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
+            navigationController?.navigationBar.barTintColor = .white
+        }
     }
     
     private func setUpConstraints() {
