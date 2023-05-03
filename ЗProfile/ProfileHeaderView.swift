@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileHeaderView: UIView {
+class ProfileHeaderView: UITableViewHeaderFooterView {
     
     var avatarImageView: UIImageView = {
         var avatarImageView = UIImageView()
@@ -36,7 +36,7 @@ class ProfileHeaderView: UIView {
     var setStatusButton: UIButton = {
         var setStatusButton = UIButton()
         setStatusButton.translatesAutoresizingMaskIntoConstraints = false
-        setStatusButton.setTitle("Show status", for: .normal)
+        setStatusButton.setTitle("Set status", for: .normal)
         setStatusButton.setTitleColor(.white, for: .normal)
         setStatusButton.backgroundColor = .systemBlue
         setStatusButton.layer.cornerRadius = 4
@@ -91,13 +91,19 @@ class ProfileHeaderView: UIView {
         avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
         self.target = self
-        self.backgroundColor = .lightGray
+        //backgroundColor = .lightGray
+        //tuneView()
         configureSubviews()
         setupConstraints()
     }
+    
+    //private func tuneView() {
+     // contentView.backgroundColor = .systemGray6
+     //   translatesAutoresizingMaskIntoConstraints = false
+   // }
     
     // добавляем вьюхи на экран
     private func configureSubviews() {
@@ -109,6 +115,7 @@ class ProfileHeaderView: UIView {
     }
     
     private func setupConstraints() {
+        //15 min configure constraints (video UITableViewDelegate)
         
         NSLayoutConstraint.activate([
             avatarImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
