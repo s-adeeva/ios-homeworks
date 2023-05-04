@@ -19,8 +19,7 @@ class ProfileViewController: UIViewController {
         return tableView
     }()
     
-    private enum CallReuseID: String {
-        case base = "BaseTableViewCell_ReuseID"
+    private enum CellReuseID: String {
         case custom = "CustomTableViewCell_ReuseID"
     }
     
@@ -50,15 +49,16 @@ class ProfileViewController: UIViewController {
     private func tunetableView() {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.sectionHeaderHeight = 240
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16) // разделитель ячейки справа прилипал к вью
         
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0.0
         }
-       
+        
         tableView.tableFooterView = UIView()
         
         tableView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: HeaderFooterReuseID.base.rawValue)
-        
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: CellReuseID.custom.rawValue)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,12 +74,14 @@ extension ProfileViewController: UITableViewDataSource {
         1
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { // количество ячеек в секции
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return postProfile.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellReuseID.custom.rawValue, for: indexPath) as! PostTableViewCell
+        cell.setupCell(post: postProfile[indexPath.row])
+        return cell
     }
 }
 
@@ -94,33 +96,9 @@ extension ProfileViewController: UITableViewDelegate {
             fatalError("couldn't dequeueReusableCell")
         }
         let backgroundView = UIView()
-            backgroundView.backgroundColor = .systemGray5
-            headerView.backgroundView = backgroundView
+        backgroundView.backgroundColor = .systemGray5
+        headerView.backgroundView = backgroundView
         return headerView
     }
 }
 
-extension UITableView {
-    func setAndLayout(headerView: UIView) {
-        tableHeaderView = headerView
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            headerView.widthAnchor.constraint(equalTo: widthAnchor)
-        ])
-        
-        headerView.setNeedsLayout()
-        headerView.layoutIfNeeded()
-        headerView.frame.size = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-    }
-}
-
-
-/* if #available(iOS 15.0, *) {
-    let navigationBarAppearance = UINavigationBarAppearance()
-    navigationBarAppearance.configureWithDefaultBackground()
-    UINavigationBar.appearance().standardAppearance = navigationBarAppearance
-    UINavigationBar.appearance().compactAppearance = navigationBarAppearance
-    UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
-    navigationController?.navigationBar.barTintColor = .white
-*/

@@ -94,17 +94,10 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         self.target = self
-        //backgroundColor = .lightGray
-        //tuneView()
         configureSubviews()
         setupConstraints()
     }
-    
-    //private func tuneView() {
-     // contentView.backgroundColor = .systemGray6
-     //   translatesAutoresizingMaskIntoConstraints = false
-   // }
-    
+   
     // добавляем вьюхи на экран
     private func configureSubviews() {
         addSubview(avatarImageView)
@@ -115,8 +108,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     }
     
     private func setupConstraints() {
-        //15 min configure constraints (video UITableViewDelegate)
-        
+       
         NSLayoutConstraint.activate([
             avatarImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
             avatarImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
