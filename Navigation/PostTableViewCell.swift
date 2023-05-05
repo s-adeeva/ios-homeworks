@@ -7,33 +7,9 @@
 
 import UIKit
 
+// 1) properties 2) inits 3) methods(funcs)
 
 class PostTableViewCell: UITableViewCell {
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        layout()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        postImage.image = nil
-        authorLabel.text = nil
-        descriptionLabel.text = nil
-        viewsLabel.text = nil
-        likesLabel.text = nil
-    }
-    
-    func setupCell(post: PostProfile) {
-        authorLabel.text = post.author
-        postImage.image = post.image
-        descriptionLabel.text = post.description
-        viewsLabel.text = "Views: \(post.views)"
-        likesLabel.text = "Likes: \(post.likes)"
-    }
     
     private let authorLabel: UILabel = {
         let authorLabel = UILabel()
@@ -76,6 +52,32 @@ class PostTableViewCell: UITableViewCell {
         likesLabel.font = UIFont.systemFont(ofSize: 16)
         return likesLabel
     }()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        layout()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        postImage.image = nil
+        authorLabel.text = nil
+        descriptionLabel.text = nil
+        viewsLabel.text = nil
+        likesLabel.text = nil
+    }
+    
+    func setupCell(post: PostProfile) {
+        authorLabel.text = post.author
+        postImage.image = post.image
+        descriptionLabel.text = post.description
+        viewsLabel.text = "Views: \(post.views)"
+        likesLabel.text = "Likes: \(post.likes)"
+    }
     
     private func layout() {
         [authorLabel, postImage, descriptionLabel, likesLabel, viewsLabel].forEach { contentView.addSubview($0) }

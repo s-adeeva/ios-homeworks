@@ -19,14 +19,6 @@ class ProfileViewController: UIViewController {
         return tableView
     }()
     
-    private enum CellReuseID: String {
-        case custom = "CustomTableViewCell_ReuseID"
-    }
-    
-    private enum HeaderFooterReuseID: String {
-        case base = "ProfileHeaderView_ReuseID"
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray5
@@ -57,8 +49,8 @@ class ProfileViewController: UIViewController {
         
         tableView.tableFooterView = UIView()
         
-        tableView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: HeaderFooterReuseID.base.rawValue)
-        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: CellReuseID.custom.rawValue)
+        tableView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: "ProfileHeaderView")
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostTableViewCell")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -79,7 +71,7 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellReuseID.custom.rawValue, for: indexPath) as! PostTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell", for: indexPath) as! PostTableViewCell
         cell.setupCell(post: postProfile[indexPath.row])
         return cell
     }
@@ -92,7 +84,7 @@ extension ProfileViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: HeaderFooterReuseID.base.rawValue) as? ProfileHeaderView else {
+        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView") as? ProfileHeaderView else {
             fatalError("couldn't dequeueReusableCell")
         }
         let backgroundView = UIView()

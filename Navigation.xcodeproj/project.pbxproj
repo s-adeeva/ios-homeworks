@@ -58,8 +58,6 @@
 		930F50F029ED870F004B871D = {
 			isa = PBXGroup;
 			children = (
-				930F511A29F1A643004B871D /* ЗProfile */,
-				930F511629ED92CF004B871D /* Post.swift */,
 				930F50FB29ED870F004B871D /* Navigation */,
 				930F50FA29ED870F004B871D /* Products */,
 			);
@@ -76,6 +74,8 @@
 		930F50FB29ED870F004B871D /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				930F511A29F1A643004B871D /* ЗProfile */,
+				930F511629ED92CF004B871D /* Post.swift */,
 				930F50FC29ED870F004B871D /* AppDelegate.swift */,
 				930F511429ED90C4004B871D /* PostViewController.swift */,
 				930F511829ED94C9004B871D /* InfoViewController.swift */,
