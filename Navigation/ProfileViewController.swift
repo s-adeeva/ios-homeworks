@@ -9,36 +9,48 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    var profileHeaderV: ProfileHeaderView!
+    private let postProfile = PostProfile.makeMockPost()
+    
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.dataSource = self
+        tableView.delegate = self
+        return tableView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Profile"
-        view.backgroundColor = .lightGray
-        profileHeaderV = ProfileHeaderView()
-        profileHeaderV.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(profileHeaderV)
-        configureConstraints()
-        profileHeaderV.setStatusButton.setTitle("Set status", for: .normal)
-        
-        if #available(iOS 15.0, *) {
-            let navigationBarAppearance = UINavigationBarAppearance()
-            navigationBarAppearance.configureWithDefaultBackground()
-            UINavigationBar.appearance().standardAppearance = navigationBarAppearance
-            UINavigationBar.appearance().compactAppearance = navigationBarAppearance
-            UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
-            navigationController?.navigationBar.barTintColor = .white
-        }
+        view.backgroundColor = .systemGray5
+        layout()
+        tunetableView()
     }
     
-    private func configureConstraints() {
+    
+    private func layout() {
+        view.addSubview(tableView)
+        
         NSLayoutConstraint.activate([
-            profileHeaderV.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            profileHeaderV.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            profileHeaderV.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            profileHeaderV.heightAnchor.constraint(equalToConstant: 220),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
+    }
+    
+    private func tunetableView() {
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.sectionHeaderHeight = 240
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16) // разделитель ячейки справа прилипал к вью
+        
+        if #available(iOS 15.0, *) {
+            tableView.sectionHeaderTopPadding = 0.0
+        }
+        
+        tableView.tableFooterView = UIView()
+        
+        tableView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: "ProfileHeaderView")
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostTableViewCell")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,3 +58,39 @@ class ProfileViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
 }
+
+// DATASOURCE
+extension ProfileViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return postProfile.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell", for: indexPath) as! PostTableViewCell
+        cell.setupCell(post: postProfile[indexPath.row])
+        return cell
+    }
+}
+
+// DELEGATE
+extension ProfileViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView") as? ProfileHeaderView else {
+            fatalError("couldn't dequeueReusableCell")
+        }
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = .systemGray5
+        headerView.backgroundView = backgroundView
+        return headerView
+    }
+}
+
