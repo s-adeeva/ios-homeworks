@@ -22,6 +22,7 @@
 		930F512229F90C24004B871D /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930F512129F90C24004B871D /* LogInViewController.swift */; };
 		930F51242A0045A3004B871D /* PostProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930F51232A0045A3004B871D /* PostProfile.swift */; };
 		930F51262A02DBC2004B871D /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930F51252A02DBC2004B871D /* PostTableViewCell.swift */; };
+		93A3E34A2A0951EE0007E9D0 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3E3492A0951EE0007E9D0 /* PhotosTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		930F512129F90C24004B871D /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		930F51232A0045A3004B871D /* PostProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostProfile.swift; sourceTree = "<group>"; };
 		930F51252A02DBC2004B871D /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
+		93A3E3492A0951EE0007E9D0 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 				930F50FE29ED870F004B871D /* SceneDelegate.swift */,
 				930F511029ED8F17004B871D /* ProfileViewController.swift */,
 				930F51252A02DBC2004B871D /* PostTableViewCell.swift */,
+				93A3E3492A0951EE0007E9D0 /* PhotosTableViewCell.swift */,
 				930F511229ED8F25004B871D /* FeedViewController.swift */,
 				930F51232A0045A3004B871D /* PostProfile.swift */,
 				930F511F29F84A7B004B871D /* UIColor + extension.swift */,
@@ -180,6 +183,7 @@
 				930F50FD29ED870F004B871D /* AppDelegate.swift in Sources */,
 				930F511329ED8F25004B871D /* FeedViewController.swift in Sources */,
 				930F511C29F1A702004B871D /* ProfileHeaderView.swift in Sources */,
+				93A3E34A2A0951EE0007E9D0 /* PhotosTableViewCell.swift in Sources */,
 				930F51242A0045A3004B871D /* PostProfile.swift in Sources */,
 				930F511129ED8F17004B871D /* ProfileViewController.swift in Sources */,
 				930F511729ED92CF004B871D /* Post.swift in Sources */,

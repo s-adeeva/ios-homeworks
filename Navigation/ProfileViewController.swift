@@ -12,7 +12,7 @@ class ProfileViewController: UIViewController {
     private let postProfile = PostProfile.makeMockPost()
     
     private lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .plain)
+        let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
         tableView.delegate = self
@@ -39,8 +39,6 @@ class ProfileViewController: UIViewController {
     }
     
     private func tunetableView() {
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.sectionHeaderHeight = 240
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16) // разделитель ячейки справа прилипал к вью
         
         if #available(iOS 15.0, *) {
@@ -50,6 +48,7 @@ class ProfileViewController: UIViewController {
         tableView.tableFooterView = UIView()
         
         tableView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: "ProfileHeaderView")
+        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: "PhotosTableViewCell")
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostTableViewCell")
     }
     
@@ -63,34 +62,63 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        1
+        2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return postProfile.count
+        switch section {
+        case 0:
+            return 1
+        case 1:
+            return postProfile.count
+        default:
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell", for: indexPath) as! PostTableViewCell
-        cell.setupCell(post: postProfile[indexPath.row])
-        return cell
+        switch indexPath.section {
+        case 0:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PhotosTableViewCell", for: indexPath) as! PhotosTableViewCell
+            return cell
+        case 1:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell", for: indexPath) as! PostTableViewCell
+            cell.setupCell(post: postProfile[indexPath.row])
+            return cell
+        default:
+            fatalError("Invalid section")
+        }
     }
 }
 
 // DELEGATE
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        UITableView.automaticDimension
+        return section == 0 ? 240 : 0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView") as? ProfileHeaderView else {
-            fatalError("couldn't dequeueReusableCell")
+        if section == 0 {
+            guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView") as? ProfileHeaderView else {
+                fatalError("couldn't dequeueReusableCell")
+            }
+            let backgroundView = UIView()
+            backgroundView.backgroundColor = .systemGray5
+            headerView.backgroundView = backgroundView
+            return headerView
+        } else {
+            return nil
         }
-        let backgroundView = UIView()
-        backgroundView.backgroundColor = .systemGray5
-        headerView.backgroundView = backgroundView
-        return headerView
     }
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = .systemGray6
+        return view
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 10
+    }
+    
 }
 

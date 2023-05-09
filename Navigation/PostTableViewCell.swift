@@ -90,8 +90,11 @@ class PostTableViewCell: UITableViewCell {
             authorLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: inset),
             authorLabel.bottomAnchor.constraint(equalTo: postImage.topAnchor, constant: -12),
             authorLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            authorLabel.heightAnchor.constraint(equalToConstant: 20),
             
             postImage.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 12),
+            postImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            postImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             postImage.heightAnchor.constraint(equalToConstant: 300),
             postImage.widthAnchor.constraint(equalTo: contentView.widthAnchor),
             postImage.bottomAnchor.constraint(equalTo: descriptionLabel.topAnchor, constant: -inset),
@@ -100,6 +103,7 @@ class PostTableViewCell: UITableViewCell {
             descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: inset),
             descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             descriptionLabel.bottomAnchor.constraint(equalTo: viewsLabel.topAnchor, constant: -inset),
+            
             
             viewsLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: inset),
             viewsLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: inset),
