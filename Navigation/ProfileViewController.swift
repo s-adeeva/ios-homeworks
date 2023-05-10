@@ -27,6 +27,11 @@ class ProfileViewController: UIViewController {
     }
     
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
     private func layout() {
         view.addSubview(tableView)
         
@@ -52,10 +57,6 @@ class ProfileViewController: UIViewController {
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostTableViewCell")
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: false)
-    }
 }
 
 // DATASOURCE
@@ -87,6 +88,13 @@ extension ProfileViewController: UITableViewDataSource {
             return cell
         default:
             fatalError("Invalid section")
+        }
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 && indexPath.row == 0 {
+            let vc = PhotosViewController()
+            vc.view.backgroundColor = .white
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
 }
