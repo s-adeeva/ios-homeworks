@@ -19,6 +19,7 @@ class ProfileViewController: UIViewController {
         return tableView
     }()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray5
@@ -26,9 +27,9 @@ class ProfileViewController: UIViewController {
         tunetableView()
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print("view will appear")
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
@@ -119,9 +120,7 @@ extension ProfileViewController: UITableViewDelegate {
         }
     }
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let view = UIView()
-        view.backgroundColor = .systemGray6
-        return view
+        return nil
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

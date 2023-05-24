@@ -10,7 +10,7 @@ import UIKit
 
 class ProfileHeaderView: UITableViewHeaderFooterView {
     
-    var avatarImageView: UIImageView = {
+    lazy var avatarImageView: UIImageView = {
         var avatarImageView = UIImageView()
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         avatarImageView.contentMode = .scaleAspectFill
@@ -18,6 +18,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         avatarImageView.image = UIImage(named: "Boba")
         avatarImageView.layer.borderColor = UIColor.white.cgColor
         avatarImageView.layer.borderWidth = 3
+        avatarImageView.isUserInteractionEnabled = true
         return avatarImageView
     }()
     
@@ -28,6 +29,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         fullNameLabel.textAlignment = .center
         fullNameLabel.text = "Boba cat"
         fullNameLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        fullNameLabel.numberOfLines = 1
         return fullNameLabel
     }()
     
@@ -75,6 +77,57 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         return statusTextField
     }()
     
+    private lazy var overlayView: UIView = {
+        let overlayView = UIView()
+        overlayView.frame = UIScreen.main.bounds
+        overlayView.backgroundColor = .black
+        overlayView.alpha = 0.5
+        overlayView.isHidden = true
+        overlayView.isUserInteractionEnabled = false
+        return overlayView
+    }()
+    
+    private lazy var closeButton: UIButton = {
+        let closeButton = UIButton()
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        closeButton.setBackgroundImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
+        closeButton.tintColor = .white
+        closeButton.isHidden = false
+        closeButton.alpha = 0
+        closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+        return closeButton
+    }()
+    
+    @objc private func closeButtonTapped() {
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            
+            self.overlayView.isHidden = true
+            self.closeButton.alpha = 0
+            
+            self.heightAnchorAvatar.constant = 130
+            self.widthAnchorAvatar.constant = 130
+            self.topAnchorAvatar.constant = 16
+            self.layoutIfNeeded()
+        })
+    }
+    
+    private var leadingAnchorAvatar = NSLayoutConstraint()
+    private var topAnchorAvatar = NSLayoutConstraint()
+    private var heightAnchorAvatar = NSLayoutConstraint()
+    private var widthAnchorAvatar = NSLayoutConstraint()
+    
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+        self.target = self
+        configureSubviews()
+        setupConstraints()
+        setupGesture()
+        bringSubviewToFront(closeButton)
+        bringSubviewToFront(avatarImageView)
+        isUserInteractionEnabled = true
+    }
+    
     @objc func statusTextChanged(_ textField: UITextField) {
         statusText = textField.text ?? ""
         statusLabel.text = statusText
@@ -91,45 +144,65 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
     }
     
-    override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
-        self.target = self
-        configureSubviews()
-        setupConstraints()
+    func setupGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
+        avatarImageView.addGestureRecognizer(tapGesture)
     }
-   
+    
+    @objc private func tapAction() {
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            
+            self.overlayView.isHidden = false
+            self.heightAnchorAvatar.constant = UIScreen.main.bounds.width - 32
+            self.widthAnchorAvatar.constant = UIScreen.main.bounds.width - 32
+            self.topAnchorAvatar.constant = UIScreen.main.bounds.width / 2
+            self.layoutIfNeeded()
+            
+        }) { _ in
+            UIView.animate(withDuration: 0.3, animations: {
+                self.closeButton.alpha = 1
+            })
+        }
+    }
+    
     // добавляем вьюхи на экран
     private func configureSubviews() {
-        addSubview(avatarImageView)
-        addSubview(fullNameLabel)
-        addSubview(setStatusButton)
-        addSubview(statusLabel)
-        addSubview(statusTextField)
+        [avatarImageView, fullNameLabel, setStatusButton, statusLabel, statusTextField, overlayView, closeButton].forEach {addSubview($0)}
     }
     
     private func setupConstraints() {
-       
+        
+        widthAnchorAvatar = avatarImageView.widthAnchor.constraint(equalToConstant: 130)
+        heightAnchorAvatar = avatarImageView.heightAnchor.constraint(equalToConstant: 130)
+        topAnchorAvatar = avatarImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16)
+        leadingAnchorAvatar = avatarImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)
+        
+        
         NSLayoutConstraint.activate([
-            avatarImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
-            avatarImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 130),
+            widthAnchorAvatar, heightAnchorAvatar, topAnchorAvatar, leadingAnchorAvatar,
             
-            fullNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
             fullNameLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 27),
             fullNameLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             
-            statusLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
             statusLabel.bottomAnchor.constraint(equalTo: statusTextField.topAnchor, constant: -8),
+            statusLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 160),
             
             statusTextField.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -8),
-            statusTextField.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
+            statusTextField.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - (16 * 3) - 130),
             statusTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             statusTextField.heightAnchor.constraint(equalToConstant: 40),
             
-            setStatusButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 28),
             setStatusButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             setStatusButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            setStatusButton.heightAnchor.constraint(equalToConstant: 50)
+            setStatusButton.heightAnchor.constraint(equalToConstant: 50),
+            setStatusButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
+            
+            closeButton.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            closeButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            closeButton.heightAnchor.constraint(equalToConstant: 50),
+            closeButton.widthAnchor.constraint(equalToConstant: 50),
+            closeButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: UIScreen.main.bounds.width - 66)
         ])
     }
     required init?(coder: NSCoder) {
