@@ -62,6 +62,7 @@ class LogInViewController: UIViewController {
         emailTextField.textColor = .black
         emailTextField.tintColor = UIColor(named: "myBlue")
         emailTextField.autocapitalizationType = .none
+        
         return emailTextField
     }()
     
@@ -79,6 +80,7 @@ class LogInViewController: UIViewController {
         passwordTextField.textColor = .black
         passwordTextField.tintColor = UIColor(named: "myBlue")
         passwordTextField.autocapitalizationType = .none
+        
         return passwordTextField
     }()
     
@@ -90,10 +92,20 @@ class LogInViewController: UIViewController {
         logInButton.setTitleColor(.white, for: .normal)
         logInButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         logInButton.setBackgroundImage(UIImage(named: "blue_pixel"), for: .normal)
-        logInButton.alpha = 1
+        // настроить кнопке альфу, чтобы при нажатии она немного темнела?
         logInButton.layer.cornerRadius = 10
         logInButton.clipsToBounds = true
         return logInButton
+    }()
+    
+    private var charsLabel: UILabel = {
+        let charsLabel = UILabel()
+        charsLabel.translatesAutoresizingMaskIntoConstraints = false
+        charsLabel.textColor = .systemGray
+        charsLabel.text = "Password should be at least 8 characters long"
+        charsLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        charsLabel.isHidden = true
+        return charsLabel
     }()
     
     private func setupTargets() {
@@ -101,9 +113,33 @@ class LogInViewController: UIViewController {
     }
     
     @objc func logInButtonPressed() {
-        let profileVC = ProfileViewController()
-        navigationController?.pushViewController(profileVC, animated: true)
+        
+        guard let email = emailTextField.text, !email.isEmpty,
+              let password = passwordTextField.text, !password.isEmpty else {
+            
+            if emailTextField.text?.isEmpty == true {
+                emailTextField.backgroundColor = UIColor.red.withAlphaComponent(0.3)
+                emailTextField.textColor = UIColor.black
+            }
+            
+            if passwordTextField.text?.isEmpty == true {
+                passwordTextField.backgroundColor = UIColor.red.withAlphaComponent(0.3)
+                passwordTextField.textColor = UIColor.black
+            }
+            
+            return
+        }
+        
+        charsLabel.isHidden = password.count >= 8
+        
+        if password.count >= 8 {
+            let profileVC = ProfileViewController()
+            self.navigationController?.pushViewController(profileVC, animated: true)
+        }
+        
     }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,7 +151,7 @@ class LogInViewController: UIViewController {
     private func configureConstraints() {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
-        [logoImage, stackView, logInButton].forEach { contentView.addSubview($0) }
+        [logoImage, stackView, charsLabel, logInButton].forEach { contentView.addSubview($0) }
         
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -139,8 +175,11 @@ class LogInViewController: UIViewController {
             stackView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             stackView.heightAnchor.constraint(equalToConstant: 100),
             
+            charsLabel.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 4),
+            charsLabel.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            charsLabel.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             
-            logInButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16),
+            logInButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 24),
             logInButton.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             logInButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             logInButton.heightAnchor.constraint(equalToConstant: 50),
@@ -188,6 +227,16 @@ extension LogInViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         view.endEditing(true)
         return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        // Сбросить изменения цвета фона или рамки при редактировании поля
+        if textField == emailTextField {
+            emailTextField.backgroundColor = .systemGray6
+        } else if textField == passwordTextField {
+            passwordTextField.backgroundColor = .systemGray6
+            charsLabel.isHidden = true
+        }
     }
 }
 

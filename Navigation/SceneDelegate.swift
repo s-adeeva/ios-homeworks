@@ -42,7 +42,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             UINavigationController(rootViewController: $0)
         }
         
-        tabBarController.selectedIndex = 0 // профиль при открытии будет первым
+        tabBarController.selectedIndex = 1 // профиль при открытии будет первым
         
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()
