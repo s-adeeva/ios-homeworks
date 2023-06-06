@@ -61,6 +61,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     }()
     
     private var statusText: String = ""
+    
     private lazy var statusTextField: UITextField = {
         let statusTextField = UITextField()
         statusTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -135,8 +136,22 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     // обрабатываем нажатие на кнопку
     @objc func buttonTapped() {
-        statusLabel.text = statusTextField.text
+       
+        guard let status = statusTextField.text, !status.isEmpty else {
+            
+            if statusTextField.text?.isEmpty == true {
+                statusTextField.backgroundColor = UIColor.red.withAlphaComponent(0.3)
+                statusTextField.textColor = UIColor.black
+            }
+            
+            return
+        }
+        
+        statusLabel.text = status
+        statusTextField.text = ""
+        
         print(statusLabel.text ?? "")
+        
     }
     
     override func layoutSubviews() {
@@ -215,6 +230,12 @@ extension ProfileHeaderView: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         endEditing(true)
         return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField == statusTextField {
+            statusTextField.backgroundColor = .systemGray6
+        }
     }
 }
 

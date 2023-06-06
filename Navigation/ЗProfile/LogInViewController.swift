@@ -108,6 +108,17 @@ class LogInViewController: UIViewController {
         return charsLabel
     }()
     
+    private let defaultLogin = "alexandra@yandex.ru"
+    
+    private let defaultPassword = "01234567"
+    
+//        private func isValidEmail(_ email: String) -> Bool {
+//        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+//
+//        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+//        return emailPred.evaluate(with: email)
+//    } не вижу смысла делать проверку валидности адреса, т.к. это делается при регистрации + и так уже много условий...
+     
     private func setupTargets() {
         logInButton.addTarget(self, action: #selector(logInButtonPressed), for: .touchUpInside)
     }
@@ -132,14 +143,15 @@ class LogInViewController: UIViewController {
         
         charsLabel.isHidden = password.count >= 8
         
-        if password.count >= 8 {
+        if email == defaultLogin && password == defaultPassword {
             let profileVC = ProfileViewController()
             self.navigationController?.pushViewController(profileVC, animated: true)
+        } else {
+            let alert = UIAlertController(title: "Error", message: "Incorrect login or password", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true)
         }
-        
     }
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
