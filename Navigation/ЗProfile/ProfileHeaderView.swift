@@ -60,7 +60,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         return statusLabel
     }()
     
-    private var statusText: String = ""
     
     private lazy var statusTextField: UITextField = {
         let statusTextField = UITextField()
@@ -74,7 +73,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         statusTextField.backgroundColor = .white
         statusTextField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         statusTextField.textColor = .black
-        statusTextField.addTarget(target, action: #selector(statusTextChanged(_:)), for: .editingDidEnd)
         return statusTextField
     }()
     
@@ -99,20 +97,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         return closeButton
     }()
     
-    @objc private func closeButtonTapped() {
-        
-        UIView.animate(withDuration: 0.5, animations: {
-            
-            self.overlayView.isHidden = true
-            self.closeButton.alpha = 0
-            
-            self.heightAnchorAvatar.constant = 130
-            self.widthAnchorAvatar.constant = 130
-            self.topAnchorAvatar.constant = 16
-            self.layoutIfNeeded()
-        })
-    }
-    
     private var leadingAnchorAvatar = NSLayoutConstraint()
     private var topAnchorAvatar = NSLayoutConstraint()
     private var heightAnchorAvatar = NSLayoutConstraint()
@@ -129,29 +113,40 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         isUserInteractionEnabled = true
     }
     
-    @objc func statusTextChanged(_ textField: UITextField) {
-        statusText = textField.text ?? ""
-        statusLabel.text = statusText
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc private func closeButtonTapped() {
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            
+            self.overlayView.isHidden = true
+            self.closeButton.alpha = 0
+            
+            self.heightAnchorAvatar.constant = 130
+            self.widthAnchorAvatar.constant = 130
+            self.topAnchorAvatar.constant = 16
+            self.layoutIfNeeded()
+        })
     }
     
     // обрабатываем нажатие на кнопку
     @objc func buttonTapped() {
-       
-        guard let status = statusTextField.text, !status.isEmpty else {
+        
+        guard let newStatus = statusTextField.text, !newStatus.isEmpty else {
             
             if statusTextField.text?.isEmpty == true {
                 statusTextField.backgroundColor = UIColor.red.withAlphaComponent(0.3)
                 statusTextField.textColor = UIColor.black
             }
-            
             return
         }
         
-        statusLabel.text = status
+        statusLabel.text = newStatus
         statusTextField.text = ""
         
         print(statusLabel.text ?? "")
-        
     }
     
     override func layoutSubviews() {
@@ -220,9 +215,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
             closeButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: UIScreen.main.bounds.width - 66)
         ])
     }
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    
 }
 
 // скрываем клавиатуру
@@ -234,7 +227,8 @@ extension ProfileHeaderView: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField == statusTextField {
-            statusTextField.backgroundColor = .systemGray6
+            statusTextField.backgroundColor = .white
+            
         }
     }
 }
