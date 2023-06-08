@@ -57,16 +57,17 @@ class ProfileViewController: UIViewController {
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: "PhotosTableViewCell")
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostTableViewCell")
     }
-    
 }
+    
 
-// DATASOURCE
+
+// MARK: DATASOURCE
 extension ProfileViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         2
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
@@ -77,7 +78,7 @@ extension ProfileViewController: UITableViewDataSource {
             return 0
         }
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
@@ -86,11 +87,34 @@ extension ProfileViewController: UITableViewDataSource {
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell", for: indexPath) as! PostTableViewCell
             cell.setupCell(post: postProfile[indexPath.row])
+
+            let likeTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleLikeTap(_:)))
+               cell.likesLabel.addGestureRecognizer(likeTapGesture)
+               cell.likesLabel.isUserInteractionEnabled = true
+
             return cell
         default:
             fatalError("Invalid section")
         }
     }
+
+// MARK: Tap Gesture for Likes label
+    @objc func handleLikeTap(_ sender: UITapGestureRecognizer) {
+        print("tapped")
+        guard let cell = sender.view?.superview?.superview as? PostTableViewCell else {
+                    return
+                }
+
+        guard let indexPath = tableView.indexPath(for: cell) else {
+                    return
+                }
+
+        var posts = PostProfile.makeMockPost()
+        posts[indexPath.row].likes += 1
+        cell.likesLabel.text = "Likes: \(posts[indexPath.row].likes)"
+        
+    }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 0 {
             let vc = PhotosViewController()
@@ -100,7 +124,7 @@ extension ProfileViewController: UITableViewDataSource {
     }
 }
 
-// DELEGATE
+// MARK: DELEGATE
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return section == 0 ? 240 : 0

@@ -45,7 +45,8 @@ class PostTableViewCell: UITableViewCell {
         return viewsLabel
     }()
     
-    private let likesLabel: UILabel = {
+    // делаю ее не приватной, чтобы был доступ в profileVC
+    let likesLabel: UILabel = {
         let likesLabel = UILabel()
         likesLabel.translatesAutoresizingMaskIntoConstraints = false
         likesLabel.textColor = .black
@@ -56,6 +57,7 @@ class PostTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         layout()
+        
     }
     
     required init?(coder: NSCoder) {
