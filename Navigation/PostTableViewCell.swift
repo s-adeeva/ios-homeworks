@@ -11,6 +11,8 @@ import UIKit
 
 class PostTableViewCell: UITableViewCell {
     
+    var post: PostProfile?
+    
     private let authorLabel: UILabel = {
         let authorLabel = UILabel()
         authorLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -20,7 +22,8 @@ class PostTableViewCell: UITableViewCell {
         return authorLabel
     }()
     
-    private let postImage: UIImageView = {
+    // чтобы был доступ в другом файле 
+    let postImage: UIImageView = {
         let postImage = UIImageView()
         postImage.translatesAutoresizingMaskIntoConstraints = false
         postImage.contentMode = .scaleAspectFit
@@ -37,7 +40,7 @@ class PostTableViewCell: UITableViewCell {
         return descriptionLabel
     }()
     
-    private let viewsLabel: UILabel = {
+    let viewsLabel: UILabel = {
         let viewsLabel = UILabel()
         viewsLabel.translatesAutoresizingMaskIntoConstraints = false
         viewsLabel.textColor = .black
@@ -80,6 +83,7 @@ class PostTableViewCell: UITableViewCell {
         viewsLabel.text = "Views: \(post.views)"
         likesLabel.text = "Likes: \(post.likes)"
     }
+    
     
     private func layout() {
         [authorLabel, postImage, descriptionLabel, likesLabel, viewsLabel].forEach { contentView.addSubview($0) }

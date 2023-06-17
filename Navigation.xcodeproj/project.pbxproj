@@ -26,6 +26,7 @@
 		93A3E34C2A0AC67D0007E9D0 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3E34B2A0AC67D0007E9D0 /* PhotosViewController.swift */; };
 		93A3E34E2A0BED6D0007E9D0 /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3E34D2A0BED6D0007E9D0 /* PhotosCollectionViewCell.swift */; };
 		93A3E3502A0BEE690007E9D0 /* PhotoGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3E34F2A0BEE690007E9D0 /* PhotoGallery.swift */; };
+		93A3E3522A321E9A0007E9D0 /* PostImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A3E3512A321E9A0007E9D0 /* PostImageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		93A3E34B2A0AC67D0007E9D0 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		93A3E34D2A0BED6D0007E9D0 /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		93A3E34F2A0BEE690007E9D0 /* PhotoGallery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGallery.swift; sourceTree = "<group>"; };
+		93A3E3512A321E9A0007E9D0 /* PostImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				930F511629ED92CF004B871D /* Post.swift */,
 				930F50FC29ED870F004B871D /* AppDelegate.swift */,
 				930F511429ED90C4004B871D /* PostViewController.swift */,
+				93A3E3512A321E9A0007E9D0 /* PostImageViewController.swift */,
 				930F511829ED94C9004B871D /* InfoViewController.swift */,
 				930F50FE29ED870F004B871D /* SceneDelegate.swift */,
 				930F511029ED8F17004B871D /* ProfileViewController.swift */,
@@ -198,6 +201,7 @@
 				930F511129ED8F17004B871D /* ProfileViewController.swift in Sources */,
 				93A3E3502A0BEE690007E9D0 /* PhotoGallery.swift in Sources */,
 				930F511729ED92CF004B871D /* Post.swift in Sources */,
+				93A3E3522A321E9A0007E9D0 /* PostImageViewController.swift in Sources */,
 				93A3E34E2A0BED6D0007E9D0 /* PhotosCollectionViewCell.swift in Sources */,
 				930F511929ED94C9004B871D /* InfoViewController.swift in Sources */,
 				930F50FF29ED870F004B871D /* SceneDelegate.swift in Sources */,

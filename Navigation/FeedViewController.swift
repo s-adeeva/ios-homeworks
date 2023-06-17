@@ -32,11 +32,6 @@ class FeedViewController: UIViewController {
         return buttonForPost1
     }()
     
-    private func setupTargets() {
-        buttonForPost1.addTarget(self, action: #selector(button1Pressed), for: .touchUpInside)
-        buttonForPost2.addTarget(self, action: #selector(button2Pressed), for: .touchUpInside)
-    }
-    
     private let buttonForPost2: UIButton = {
         let buttonForPost2 = UIButton()
         buttonForPost2.setTitleColor(.black, for: .normal)
@@ -44,6 +39,11 @@ class FeedViewController: UIViewController {
         buttonForPost2.setTitle("See the post", for: .normal)
         return buttonForPost2
     }()
+    
+    private func setupTargets() {
+        buttonForPost1.addTarget(self, action: #selector(button1Pressed), for: .touchUpInside)
+        buttonForPost2.addTarget(self, action: #selector(button2Pressed), for: .touchUpInside)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

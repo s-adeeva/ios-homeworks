@@ -57,8 +57,9 @@ class ProfileViewController: UIViewController {
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: "PhotosTableViewCell")
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostTableViewCell")
     }
+    var posts = PostProfile.makeMockPost()
 }
-    
+
 
 
 // MARK: DATASOURCE
@@ -67,7 +68,7 @@ extension ProfileViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         2
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
@@ -78,7 +79,7 @@ extension ProfileViewController: UITableViewDataSource {
             return 0
         }
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
@@ -87,34 +88,67 @@ extension ProfileViewController: UITableViewDataSource {
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell", for: indexPath) as! PostTableViewCell
             cell.setupCell(post: postProfile[indexPath.row])
-
+            
+            // нажатие на лайки
             let likeTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleLikeTap(_:)))
-               cell.likesLabel.addGestureRecognizer(likeTapGesture)
-               cell.likesLabel.isUserInteractionEnabled = true
-
+            cell.likesLabel.addGestureRecognizer(likeTapGesture)
+            cell.likesLabel.isUserInteractionEnabled = true
+            
+            // нажатие на картинку
+            let imageTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleImageTap(_:)))
+            cell.postImage.addGestureRecognizer(imageTapGesture)
+            cell.postImage.isUserInteractionEnabled = true
+            
             return cell
         default:
             fatalError("Invalid section")
         }
     }
-
-// MARK: Tap Gesture for Likes label
+    
+    // MARK: Tap Gesture for Likes label
     @objc func handleLikeTap(_ sender: UITapGestureRecognizer) {
         print("tapped")
         guard let cell = sender.view?.superview?.superview as? PostTableViewCell else {
-                    return
-                }
-
-        guard let indexPath = tableView.indexPath(for: cell) else {
-                    return
-                }
-
-        var posts = PostProfile.makeMockPost()
-        posts[indexPath.row].likes += 1
-        cell.likesLabel.text = "Likes: \(posts[indexPath.row].likes)"
+            return
+        }
         
+        guard let indexPath = tableView.indexPath(for: cell) else {
+            return
+        }
+        
+        
+        posts[indexPath.row].incrementLikes()
+        cell.likesLabel.text = "Likes: \(posts[indexPath.row].likes)"
+        cell.likesLabel.isUserInteractionEnabled = false
     }
-
+    
+    // MARK: Tap Gesture for Image in cell
+    
+    @objc func handleImageTap(_ gesture: UITapGestureRecognizer) {
+        guard let view = gesture.view as? UIImageView else {
+            return
+        }
+        guard let cell = view.superview?.superview as? PostTableViewCell else {
+            return
+        }
+        
+        guard let indexPath = tableView.indexPath(for: cell) else {
+            return
+        }
+        
+        
+        print("i'm tapped")
+        
+        let postImageVC = PostImageViewController()
+        
+        posts[indexPath.row].incrementViews()
+        cell.viewsLabel.text = "Views: \(posts[indexPath.row].views)"
+        print(posts[indexPath.row].likes)
+        postImageVC.post = posts[indexPath.row]
+        
+        present(postImageVC, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 0 {
             let vc = PhotosViewController()

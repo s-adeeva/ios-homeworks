@@ -14,6 +14,14 @@ struct PostProfile {
     var likes: Int
     var views: Int
     
+    mutating func incrementViews() {
+        views += 1
+    }
+    
+    mutating func incrementLikes() {
+        likes += 1
+    }
+    
     static func makeMockPost() -> [PostProfile] {
         var post = [PostProfile]()
         

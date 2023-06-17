@@ -108,17 +108,17 @@ class LogInViewController: UIViewController {
         return charsLabel
     }()
     
-    private let defaultLogin = "alexandra@yandex.ru"
+    private let defaultLogin = "1" // CHANGE
     
     private let defaultPassword = "01234567"
     
-//        private func isValidEmail(_ email: String) -> Bool {
-//        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-//
-//        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-//        return emailPred.evaluate(with: email)
-//    } не вижу смысла делать проверку валидности адреса, т.к. это делается при регистрации + и так уже много условий...
-     
+    //        private func isValidEmail(_ email: String) -> Bool {
+    //        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+    //
+    //        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+    //        return emailPred.evaluate(with: email)
+    //    } не вижу смысла делать проверку валидности адреса, т.к. это делается при регистрации + и так уже много условий...
+    
     private func setupTargets() {
         logInButton.addTarget(self, action: #selector(logInButtonPressed), for: .touchUpInside)
     }
