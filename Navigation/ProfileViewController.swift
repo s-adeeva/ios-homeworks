@@ -9,7 +9,7 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    private let postProfile = PostProfile.makeMockPost()
+    private var postProfile = PostProfile.makeMockPost()
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -57,7 +57,7 @@ class ProfileViewController: UIViewController {
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: "PhotosTableViewCell")
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostTableViewCell")
     }
-    var posts = PostProfile.makeMockPost()
+    //var posts = PostProfile.makeMockPost()
 }
 
 
@@ -117,8 +117,8 @@ extension ProfileViewController: UITableViewDataSource {
         }
         
         
-        posts[indexPath.row].incrementLikes()
-        cell.likesLabel.text = "Likes: \(posts[indexPath.row].likes)"
+        postProfile[indexPath.row].incrementLikes()
+        cell.likesLabel.text = "Likes: \(postProfile[indexPath.row].likes)"
         cell.likesLabel.isUserInteractionEnabled = false
     }
     
@@ -141,10 +141,10 @@ extension ProfileViewController: UITableViewDataSource {
         
         let postImageVC = PostImageViewController()
         
-        posts[indexPath.row].incrementViews()
-        cell.viewsLabel.text = "Views: \(posts[indexPath.row].views)"
-        print(posts[indexPath.row].likes)
-        postImageVC.post = posts[indexPath.row]
+        postProfile[indexPath.row].incrementViews()
+        cell.viewsLabel.text = "Views: \(postProfile[indexPath.row].views)"
+        print(postProfile[indexPath.row].likes)
+        postImageVC.post = postProfile[indexPath.row]
         
         present(postImageVC, animated: true)
     }
@@ -185,5 +185,17 @@ extension ProfileViewController: UITableViewDelegate {
         return 10
     }
     
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            
+            postProfile.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+        }
+    }
 }
 
