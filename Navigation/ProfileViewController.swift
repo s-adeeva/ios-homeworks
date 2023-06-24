@@ -19,7 +19,7 @@ class ProfileViewController: UIViewController {
         return tableView
     }()
     
-    
+    // MARK: life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray5
@@ -29,7 +29,6 @@ class ProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("view will appear")
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
@@ -57,10 +56,8 @@ class ProfileViewController: UIViewController {
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: "PhotosTableViewCell")
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostTableViewCell")
     }
-    //var posts = PostProfile.makeMockPost()
+  
 }
-
-
 
 // MARK: DATASOURCE
 extension ProfileViewController: UITableViewDataSource {
@@ -107,7 +104,6 @@ extension ProfileViewController: UITableViewDataSource {
     
     // MARK: Tap Gesture for Likes label
     @objc func handleLikeTap(_ sender: UITapGestureRecognizer) {
-        print("tapped")
         guard let cell = sender.view?.superview?.superview as? PostTableViewCell else {
             return
         }
@@ -115,7 +111,6 @@ extension ProfileViewController: UITableViewDataSource {
         guard let indexPath = tableView.indexPath(for: cell) else {
             return
         }
-        
         
         postProfile[indexPath.row].incrementLikes()
         cell.likesLabel.text = "Likes: \(postProfile[indexPath.row].likes)"
@@ -135,10 +130,7 @@ extension ProfileViewController: UITableViewDataSource {
         guard let indexPath = tableView.indexPath(for: cell) else {
             return
         }
-        
-        
-        print("i'm tapped")
-        
+       
         let postImageVC = PostImageViewController()
         
         postProfile[indexPath.row].incrementViews()

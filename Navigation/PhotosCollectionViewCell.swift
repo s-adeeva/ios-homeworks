@@ -9,13 +9,27 @@ import UIKit
 
 class PhotosCollectionViewCell: UICollectionViewCell {
     
-    private let picture: UIImageView = {
+    let picture: UIImageView = {
         let picture = UIImageView()
         picture.translatesAutoresizingMaskIntoConstraints = false
         picture.clipsToBounds = true
         picture.contentMode = .scaleAspectFill
         return picture
     }()
+    
+    lazy var overlayView: UIView = {
+        let overlayView = UIView()
+        overlayView.bounds = UIScreen.main.bounds
+        overlayView.backgroundColor = .black
+        overlayView.alpha = 0.5
+        overlayView.isHidden = true
+        overlayView.isUserInteractionEnabled = false
+        return overlayView
+    }()
+    
+    lazy var originalCenter: CGPoint = .zero // для возвращения фотографии в исходное положение в коллекции
+    
+    private var photos = Photos.placePhotos()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,11 +40,20 @@ class PhotosCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+    }
+    
+    func setOriginalCenter() {
+        originalCenter = center
+    }
+    
     func setupCVcell(photo: Photos) {
         picture.image = photo.image
     }
     
     private func layout() {
+        contentView.addSubview(overlayView)
         contentView.addSubview(picture)
         
         NSLayoutConstraint.activate([
@@ -41,3 +64,4 @@ class PhotosCollectionViewCell: UICollectionViewCell {
         ])
     }
 }
+

@@ -8,7 +8,7 @@
 import UIKit
 
 class PostViewController: UIViewController {
-
+    
     var post: Post!
     
     override func viewDidLoad() {
@@ -16,18 +16,11 @@ class PostViewController: UIViewController {
         view.backgroundColor = .systemCyan
         title = post.title
         
-        
         // добавляем кнопку на навигейшн бар чтобы открылся infoVC (модально)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Info", style: .plain, target: self, action: #selector(infoTapped))
     }
     
-    @objc func infoTapped() {
-        let infoVC = InfoViewController()
-        present(infoVC,animated: true)
-    }
-    
-// скрываю таб бар на экране поста
-    
+    // скрываю таб бар на экране поста
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = true
@@ -37,6 +30,9 @@ class PostViewController: UIViewController {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
     }
-
-
+    
+    @objc func infoTapped() {
+        let infoVC = InfoViewController()
+        present(infoVC,animated: true)
+    }
 }

@@ -24,7 +24,7 @@ class PostImageViewController: UIViewController {
         let postImage2 = UIImageView()
         postImage2.translatesAutoresizingMaskIntoConstraints = false
         postImage2.contentMode = .scaleAspectFit
-        postImage2.backgroundColor = .systemGray4
+        postImage2.backgroundColor = .black
         return postImage2
     }()
     
@@ -54,8 +54,6 @@ class PostImageViewController: UIViewController {
         return likesLabel2
     }()
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         layout()
@@ -69,14 +67,6 @@ class PostImageViewController: UIViewController {
             likesLabel2.text = "Likes: \(post.likes)"
         }
     }
-    
-    //    func setupView (post: PostProfile) {
-    //        authorLabel2.text = post.author
-    //        postImage2.image = post.image
-    //        descriptionLabel2.text = post.description
-    //        viewsLabel2.text = "Views: \(post.views)"
-    //        likesLabel2.text = "Likes: \(post.likes)"
-    //    }
     
     private func layout() {
         [authorLabel2, postImage2, descriptionLabel2, viewsLabel2, likesLabel2].forEach { view.addSubview($0) }
@@ -110,6 +100,4 @@ class PostImageViewController: UIViewController {
             likesLabel2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -inset),
         ])
     }
-    
-    
 }

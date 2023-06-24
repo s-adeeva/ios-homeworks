@@ -129,8 +129,6 @@ class PhotosTableViewCell: UITableViewCell {
             photosImage4.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -inset),
             photosImage4.widthAnchor.constraint(equalToConstant: (screenWidth - 48) / 4),
             photosImage4.heightAnchor.constraint(equalToConstant: 120)
-            
-            
         ])
     }
 }

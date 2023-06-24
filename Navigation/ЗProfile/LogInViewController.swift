@@ -84,7 +84,6 @@ class LogInViewController: UIViewController {
         return passwordTextField
     }()
     
-    //настроить alpha
     private var logInButton: UIButton = {
         let logInButton = UIButton()
         logInButton.translatesAutoresizingMaskIntoConstraints = false
@@ -92,7 +91,6 @@ class LogInViewController: UIViewController {
         logInButton.setTitleColor(.white, for: .normal)
         logInButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         logInButton.setBackgroundImage(UIImage(named: "blue_pixel"), for: .normal)
-        // настроить кнопке альфу, чтобы при нажатии она немного темнела?
         logInButton.layer.cornerRadius = 10
         logInButton.clipsToBounds = true
         return logInButton
@@ -108,16 +106,32 @@ class LogInViewController: UIViewController {
         return charsLabel
     }()
     
-    private let defaultLogin = "1" // CHANGE
+    private let defaultLogin = "alexandra"
     
     private let defaultPassword = "01234567"
     
-    //        private func isValidEmail(_ email: String) -> Bool {
-    //        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-    //
-    //        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-    //        return emailPred.evaluate(with: email)
-    //    } не вижу смысла делать проверку валидности адреса, т.к. это делается при регистрации + и так уже много условий...
+    // MARK: life cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        configureConstraints()
+        setupTargets()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        nc.addObserver(self, selector: #selector(keyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        nc.addObserver(self, selector: #selector(keyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        nc.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        nc.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
     
     private func setupTargets() {
         logInButton.addTarget(self, action: #selector(logInButtonPressed), for: .touchUpInside)
@@ -153,12 +167,6 @@ class LogInViewController: UIViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        configureConstraints()
-        setupTargets()
-    }
     
     private func configureConstraints() {
         view.addSubview(scrollView)
@@ -199,21 +207,7 @@ class LogInViewController: UIViewController {
         ])
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: false)
-        
-        nc.addObserver(self, selector: #selector(keyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        nc.addObserver(self, selector: #selector(keyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        nc.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        nc.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
+    // MARK: keyboard
     @objc private func keyboardShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             scrollView.contentInset.bottom = keyboardSize.height
@@ -242,7 +236,6 @@ extension LogInViewController: UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        // Сбросить изменения цвета фона или рамки при редактировании поля
         if textField == emailTextField {
             emailTextField.backgroundColor = .systemGray6
         } else if textField == passwordTextField {

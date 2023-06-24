@@ -21,8 +21,7 @@ class PostTableViewCell: UITableViewCell {
         authorLabel.numberOfLines = 2
         return authorLabel
     }()
-    
-    // чтобы был доступ в другом файле 
+
     let postImage: UIImageView = {
         let postImage = UIImageView()
         postImage.translatesAutoresizingMaskIntoConstraints = false
